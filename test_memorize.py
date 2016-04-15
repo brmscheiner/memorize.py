@@ -1,7 +1,7 @@
-import memorize
+from memorize import Memorize
 import random, time
 
-@memorize.memoized
+@Memorize
 def test_memorize(x):
     time.sleep(1)
     return x
