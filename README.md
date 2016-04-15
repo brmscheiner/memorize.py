@@ -2,7 +2,7 @@
 Simple decorator for memoizing a function across multiple program executions.
 
 ## Wait, what?
-A function decorated with @memorize saves/remembers/caches its return value every time it is called. If the function is called 
+A function decorated with @Memorize saves/remembers/caches its return value every time it is called. If the function is called 
 later with the same arguments, the cached value is returned (the function is not reevaluated). This process is called **memoization**. 
 Memorize.py does a little more than a [typical memoizing decorator](https://wiki.python.org/moin/PythonDecoratorLibrary#Memoize) because it stores the cache as a .cache file in the current directory for reuse in future program executions. If the Python file containing the 
 decorated function has been updated since the last run, the current cache is deleted and a new cache is created (in case the behavior of the function has changed).
