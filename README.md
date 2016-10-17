@@ -11,4 +11,4 @@ Otherwise you might encounter unexpected results.
 * Does the function depend on anything outside of the current file that may have changed (external classes, methods, functions, or data)?
 
 ## Unfinished business
-Don't use this for functions that take arguments that cannot be dictionary keys (such as lists). I'd like to add support for this in the future.
+Don't use this for functions whose arguments can't be dictionary keys (such as lists). I'd like to add support for this in the future.
