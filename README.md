@@ -2,7 +2,7 @@
 memorize.py is a basic decorator for caching a function's results in local storage. Memorize is a play on *memoize*, which means to cache a function.
 
 ## What's the point?
-In many situations, recycling the output of a function is more efficient than running the function multiple times. A [typical memoizing decorator](https://wiki.python.org/moin/PythonDecoratorLibrary#Memoize) does exactly that for as long as a program is running (the output is stored in Python variable space). Memorize.py stores the output as a .cache file in the current directory for reuse in future program executions. If the Python file containing the decorated function has changed since the last run, the current cache is deleted and a new cache is created (in case the behavior of the function has changed).
+In many situations, recycling the output of a function is more efficient than running the function multiple times. A [typical memoizing decorator](https://wiki.python.org/moin/PythonDecoratorLibrary#Memoize) does exactly that for as long as a program is running (the output is stored in Python variable space). Memorize.py stores the output as a .cache file in the current (or target file's) directory for reuse in future program executions. If the Python file containing the decorated function has changed since the last run, the current cache is deleted and a new cache is created (in case the behavior of the function has changed).
 
 ## Danger zone!
 **BEWARE**: only [pure functions](http://www.sitepoint.com/functional-programming-pure-functions/) should be memoized! 
@@ -16,5 +16,5 @@ Don't use this for functions whose arguments can't be dictionary keys (such as l
 ## Install
 
 ```
-pip install -e git+https://github.com/brmscheiner/memorize.py.git#egg=memorize
+pip install git+https://github.com/brmscheiner/memorize.py.git#egg=memorize
 ```

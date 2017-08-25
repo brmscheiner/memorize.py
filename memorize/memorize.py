@@ -41,6 +41,11 @@ import re
 import unicodedata
 
 
+# This configures the place to store cache files globally.
+# Set it to False to store cache files next to files for which function calls are cached.
+USE_CURRENT_DIR = True
+
+
 class Memorize(object):
     '''
     A function decorated with @memorize caches its return
@@ -59,15 +64,19 @@ class Memorize(object):
         self.parent_filepath = os.path.abspath(function_file)
         self.parent_filename = os.path.basename(function_file)
         self.__name__ = self.func.__name__
-        self.set_cache_filename()
-        if self.cache_exists():
-            self.read_cache() # Sets self.timestamp and self.cache
-            if not self.is_safe_cache():
+        self.cache = None  # lazily initialize cache to account for changed global dir setting (USE_CURRENT_DIR)
+
+    def check_cache(self):
+        if self.cache is None:
+            if self.cache_exists():
+                self.read_cache()  # Sets self.timestamp and self.cache
+                if not self.is_safe_cache():
+                    self.cache = {}
+            else:
                 self.cache = {}
-        else:
-            self.cache = {}
 
     def __call__(self, *args):
+        self.check_cache()
         if not isinstance(args, collections.Hashable):
             return self.func(*args)
         if args in self.cache:
@@ -78,14 +87,15 @@ class Memorize(object):
             self.save_cache()
             return value
 
-    def set_cache_filename(self):
+    def get_cache_filename(self):
         """
         Sets self.cache_filename to an os-compliant
         version of "file_function.cache"
         """
         filename = _slugify(self.parent_filename.replace('.py', ''))
         funcname = _slugify(self.__name__)
-        self.cache_filename = filename+'_'+funcname+'.cache'
+        folder = os.path.curdir if USE_CURRENT_DIR else os.path.dirname(self.parent_filepath)
+        return os.path.join(folder, filename + '_' + funcname + '.cache')
 
     def get_last_update(self):
         """
@@ -110,7 +120,7 @@ class Memorize(object):
         Read a pickled dictionary into self.timestamp and
         self.cache. See self.save_cache.
         """
-        with open(self.cache_filename, 'rb') as f:
+        with open(self.get_cache_filename(), 'rb') as f:
             data = pickle.loads(f.read())
             self.timestamp = data['timestamp']
             self.cache = data['cache']
@@ -120,7 +130,7 @@ class Memorize(object):
         Pickle the file's timestamp and the function's cache
         in a dictionary object.
         """
-        with open(self.cache_filename, 'wb+') as f:
+        with open(self.get_cache_filename(), 'wb+') as f:
             out = dict()
             out['timestamp'] = self.get_last_update()
             out['cache'] = self.cache
@@ -130,7 +140,7 @@ class Memorize(object):
         '''
         Returns True if a matching cache exists in the current directory.
         '''
-        if os.path.isfile(self.cache_filename):
+        if os.path.isfile(self.get_cache_filename()):
             return True
         return False
 
