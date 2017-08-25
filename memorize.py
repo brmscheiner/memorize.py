@@ -55,7 +55,9 @@ class Memorize(object):
     '''
     def __init__(self, func):
         self.func = func
-        self.set_parent_file() # Sets self.parent_filepath and self.parent_filename
+        function_file = inspect.getfile(func)
+        self.parent_filepath = os.path.abspath(function_file)
+        self.parent_filename = os.path.basename(function_file)
         self.__name__ = self.func.__name__
         self.set_cache_filename()
         if self.cache_exists():
@@ -75,15 +77,6 @@ class Memorize(object):
             self.cache[args] = value
             self.save_cache()
             return value
-
-    def set_parent_file(self):
-        """
-        Sets self.parent_file to the absolute path of the
-        file containing the memoized function.
-        """
-        rel_parent_file = inspect.stack()[-1].filename
-        self.parent_filepath = os.path.abspath(rel_parent_file)
-        self.parent_filename = _filename_from_path(rel_parent_file)
 
     def set_cache_filename(self):
         """
@@ -161,6 +154,3 @@ def _slugify(value):
     value = value.strip().lower()
     value = re.sub(r'[-\s]+', '-', value)
     return value
-
-def _filename_from_path(filepath):
-    return filepath.split('/')[-1]

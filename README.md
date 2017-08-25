@@ -12,3 +12,9 @@ Otherwise you might encounter unexpected results.
 
 ## Unfinished business
 Don't use this for functions whose arguments can't be dictionary keys (such as lists). I'd like to add support for this in the future.
+
+## Install
+
+```
+pip install -e git+https://github.com/brmscheiner/memorize.py.git#egg=memorize
+```
