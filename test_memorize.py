@@ -1,4 +1,4 @@
-from memorize import Memorize
+from memorize.memorize import Memorize
 import time
 
 @Memorize
