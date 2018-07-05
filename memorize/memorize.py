@@ -77,15 +77,16 @@ class Memorize(object):
 
     def __call__(self, *args):
         self.check_cache()
-        if not isinstance(args, collections.Hashable):
+        try:
+            if args in self.cache:
+                return self.cache[args]
+            else:
+                value = self.func(*args)
+                self.cache[args] = value
+                self.save_cache()
+                return value
+        except TypeError: # unhashable arguments
             return self.func(*args)
-        if args in self.cache:
-            return self.cache[args]
-        else:
-            value = self.func(*args)
-            self.cache[args] = value
-            self.save_cache()
-            return value
 
     def get_cache_filename(self):
         """
