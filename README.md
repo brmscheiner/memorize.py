@@ -22,7 +22,7 @@ pip install git+https://github.com/brmscheiner/memorize.py.git#egg=memorize
 ## Usage 
 
 ```
-from memorize.memorize import Memorize
+from memorize import Memorize
 
 @Memorize
 def yourFunction(x, y, z):
