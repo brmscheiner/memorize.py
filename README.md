@@ -19,12 +19,6 @@ Don't use this for functions whose arguments can't be dictionary keys (such as l
 pip install memorize.py
 ```
 
-or
-
-```shell
-pip install git+https://github.com/brmscheiner/memorize.py.git#egg=memorize
-```
-
 ## Usage 
 
 ```

@@ -24,16 +24,16 @@ class UploadCommand(Command):
 
     def run(self):
         try:
-            print('Removing previous builds…')
+            print('Removing previous builds...')
             rmtree(os.path.join(here, 'dist'))
         except OSError:
             pass
 
-        print('Building Source and Wheel (universal) distribution…')
+        print('Building Source and Wheel (universal) distribution...')
         os.system(
             '{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
 
-        print('Uploading the package to PyPI via Twine…')
+        print('Uploading the package to PyPI via Twine...')
         os.system('twine upload dist/*')
 
         sys.exit()
