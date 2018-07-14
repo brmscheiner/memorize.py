@@ -15,14 +15,20 @@ Don't use this for functions whose arguments can't be dictionary keys (such as l
 
 ## Install
 
+```shell
+pip install memorize.py
 ```
+
+or
+
+```shell
 pip install git+https://github.com/brmscheiner/memorize.py.git#egg=memorize
 ```
 
 ## Usage 
 
 ```
-from memorize.memorize import Memorize
+from memorize import Memorize
 
 @Memorize
 def yourFunction(x, y, z):

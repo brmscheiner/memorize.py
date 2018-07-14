@@ -1,4 +1,4 @@
-from memorize.memorize import Memorize
+from memorize import Memorize
 
 
 @Memorize
