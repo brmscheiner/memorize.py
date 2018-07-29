@@ -41,11 +41,6 @@ import re
 import unicodedata
 
 
-# This configures the place to store cache files globally.
-# Set it to False to store cache files next to files for which function calls are cached.
-USE_CURRENT_DIR = True
-
-
 class Memorize(object):
     '''
     A function decorated with @memorize caches its return
@@ -58,6 +53,11 @@ class Memorize(object):
     the current cache is deleted and a new cache is created
     (in case the behavior of the function has changed).
     '''
+
+    # This configures the place to store cache files globally.
+    # Set it to False to store cache files next to files for which function calls are cached.
+    USE_CURRENT_DIR = True
+
     def __init__(self, func):
         self.func = func
         function_file = inspect.getfile(func)
@@ -95,7 +95,7 @@ class Memorize(object):
         """
         filename = _slugify(self.parent_filename.replace('.py', ''))
         funcname = _slugify(self.__name__)
-        folder = os.path.curdir if USE_CURRENT_DIR else os.path.dirname(self.parent_filepath)
+        folder = os.path.curdir if self.USE_CURRENT_DIR else os.path.dirname(self.parent_filepath)
         return os.path.join(folder, filename + '_' + funcname + '.cache')
 
     def get_last_update(self):

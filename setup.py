@@ -42,7 +42,7 @@ class UploadCommand(Command):
 setup(
     name='memorize.py',
     packages=['memorize'],
-    version='1.1',
+    version='1.2',
     description='Simple decorator for memoizing a function across multiple program executions.',
     author='Ben Scheiner',
     url='https://github.com/brmscheiner/memorize.py',
